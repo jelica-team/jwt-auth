@@ -1,0 +1,27 @@
+{
+  "name": "jelica",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.18.2",
+    "bookshelf": "^0.13.3",
+    "bookshelf-secure-password": "^3.0.1",
+    "dotenv": "^5.0.1",
+    "express": "^4.16.3",
+    "jsonwebtoken": "^8.2.1",
+    "knex": "^0.14.5",
+    "nodemon": "^1.17.3",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "pg": "^7.4.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
