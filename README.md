@@ -24,5 +24,5 @@ You will receive a string with an authorization code, you need to select the Aut
 You will see the inscription "I'm protected"
 
 # Config DB
-Is in knexDb fields in index.js and in knexfile.js.
+Is in knexDb fields in app.js and in knexfile.js.
 Later this will be changed to a more understandable form.
