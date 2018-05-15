@@ -25,5 +25,6 @@ $ npm run dev
 Need create ```sh map_db``` table
 
 # Using placemarks
-Enter the address and click the button
-A label will be created on the map
+- Enter the address
+- Click the button
+- A label will be created on the map
