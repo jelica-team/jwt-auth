@@ -58,13 +58,6 @@ app.get('/', (req,res) => {
   res.rendex('index.html');
 });
 
-// не забыть убрать
-app.get('/placemarkers', function(req, res) {
-  knexDb.raw('select * from placemarkers').then(function(placemarkers) {
-    res.send(placemarkers);
-  });
-});
-
 app.post('/newPlacemarker', (req,res) => {
   const placemarker = new Placemarker({
       user_id: req.body.user_id,
@@ -77,11 +70,6 @@ app.post('/newPlacemarker', (req,res) => {
   });
 
   placemarker.save().then(() => {res.send('placemarker done');});
-});
-
-app.post('/axios', (req,res) => {
-  console.log(req.body);
-  res.send('k');
 });
 
 app.post('/seedUser', (req,res) => {
