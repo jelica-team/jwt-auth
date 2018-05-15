@@ -52,8 +52,10 @@ app.use(parser.urlencoded({
 }));
 app.use(parser.json());
 
+app.use(express.static('public'));
+
 app.get('/', (req,res) => {
-  res.send('Hello world');
+  res.rendex('index.html');
 });
 
 // не забыть убрать
@@ -75,6 +77,11 @@ app.post('/newPlacemarker', (req,res) => {
   });
 
   placemarker.save().then(() => {res.send('placemarker done');});
+});
+
+app.post('/axios', (req,res) => {
+  console.log(req.body);
+  res.send('k');
 });
 
 app.post('/seedUser', (req,res) => {
