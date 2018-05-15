@@ -14,15 +14,15 @@ $ npm run dev
  - POST : http://localhost:3000/newPlacemarker , Body (x-www-form-urlencoded) looks like this
     ```sh
       Key                Value 
-    $ user_id            1
-    $ latitude          30.30
+    $ user_id 		1
+    $ latitude 			30.30
     $ longitude			60.4324
-    $ hintContent		Hint
-    $ balloonContent	<strong>Balloon</strong>
+    $ hintContent 		Hint
+    $ balloonContent 		<strong>Balloon</strong>
     ```
 
 # Config DB
-Need create ```sh map_db``` table
+Need create ```map_db``` table
 
 # Using placemarks
 - Enter the address
