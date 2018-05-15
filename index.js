@@ -14,7 +14,7 @@ const knexDb = knex ({client: 'pg',
                           host: '127.0.0.1',
                           user: 'postgres',
                           password: 'ef91ckut',
-                          database: 'jwt_auth'
+                          database: 'map_db'
                       }
 });
 const bookshelf = require('bookshelf');
@@ -28,6 +28,9 @@ const User = db.Model.extend({
     hasSecurePassword: true
 });
 
+const Placemarker = db.Model.extend({
+    tableName: 'placemarkers'
+});
 
 
 const opts = {
@@ -51,6 +54,27 @@ app.use(parser.json());
 
 app.get('/', (req,res) => {
   res.send('Hello world');
+});
+
+// не забыть убрать
+app.get('/placemarkers', function(req, res) {
+  knexDb.raw('select * from placemarkers').then(function(placemarkers) {
+    res.send(placemarkers);
+  });
+});
+
+app.post('/newPlacemarker', (req,res) => {
+  const placemarker = new Placemarker({
+      user_id: req.body.user_id,
+      latitude: req.body.latitude,
+      longitude: req.body.longitude,
+      hintContent: req.body.hintContent,
+      balloonContent: req.body.balloonContent,
+      created_at: req.body.created_at,
+      updated_at: req.body.updated_at
+  });
+
+  placemarker.save().then(() => {res.send('placemarker done');});
 });
 
 app.post('/seedUser', (req,res) => {
