@@ -16,30 +16,57 @@ function addAddress(address) {
 	        })
 			.then(function(response){
 			  console.log('saved successfully')
-			  var placemark = {
-			  		latitude: coordinates[1], 
-	        		longitude: coordinates[0], 
-	        		hintContent: "da",
-	        		balloonContent: "net" 
-	        	}
+			  var placemark = { latitude: coordinates[1], longitude: coordinates[0], 
+	        		hintContent: "da", balloonContent: "net" }
+
 			  map.geoObjects.add(new ymaps.Placemark([placemark.latitude, placemark.longitude], 
-	{
-		hintContent: placemark.hintContent,
-		balloonContent: placemark.balloonContent
-	},	
-	{
-		iconLayout: 'default#image',
-		iconImageHref: 'Game.ico',
-		iconImageSize: [43, 43],
-		iconImageOffset: [-21, -43]
-	}));
+				{
+					hintContent: placemark.hintContent,
+					balloonContent: placemark.balloonContent
+				},	
+				{
+					iconLayout: 'default#image',
+					iconImageHref: 'Game.ico',
+					iconImageSize: [43, 43],
+					iconImageOffset: [-21, -43]
+				}));
 			});  
-	    },
-	    function (err) {
-	        // обработка ошибки
-	    }
-	);
+		},
+		function (err) {
+		    // обработка ошибки
+		});
 };
+
+function addGeolocation() {
+	ymaps.geolocation.get({
+        provider: 'browser',
+        mapStateAutoApply: true
+    }).then(function (result) {
+        var coordinates = result.geoObjects.position;
+	   	axios.post('/newPlacemarker', { 
+	   		user_id: 1, // После слияния с авторизацией надо будет передавать авторизованного пользователя
+	   		latitude: coordinates[0], 
+	   		longitude: coordinates[1], 
+	   		hintContent: "geo", // На хинты, балуны надо будет навесить еще поля и также передавать
+	   		balloonContent: "geo" 
+	   	})
+		.then(function(response){
+		  console.log('saved geo successfully')
+		  var placemark = { latitude: coordinates[0], longitude: coordinates[1], 
+	   		hintContent: "geo", balloonContent: "geo" }
+		  map.geoObjects.add(new ymaps.Placemark([placemark.latitude, placemark.longitude], 
+			{
+				hintContent: placemark.hintContent,
+				balloonContent: placemark.balloonContent
+			},	
+			{
+				iconLayout: 'default#image',
+				iconImageHref: 'Game.ico',
+				iconImageSize: [43, 43],
+				iconImageOffset: [-21, -43]
+			}));
+    	});
+})};
 
 function init() {
 	map = new ymaps.Map('map', {
@@ -47,4 +74,4 @@ function init() {
         zoom: 10,
         controls: ['zoomControl']
 	});
-}
+} 
