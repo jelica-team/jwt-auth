@@ -29,7 +29,7 @@ const User = db.Model.extend({
 });
 
 const Order = db.Model.extend({
-  tableName:'orderTable',
+  tableName:'orders',
 });
 
 
@@ -87,8 +87,8 @@ app.post('/getToken', (req,res) => {
 app.post('/createOrder', (req,res) => {
   const order = new Order({
     userName: req.body.userName,
-    time: req.body.time,
     address: req.body.address,
+    description: req.body.description,
     latitude: req.body.latitude,
     longitude: req.body.longitude
   });
@@ -100,5 +100,5 @@ app.get('/protected' , passport.authenticate('jwt', { session:false }), (req, re
    res.send('i\'m protected');
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8000;
 app.listen(PORT);
