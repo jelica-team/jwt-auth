@@ -28,6 +28,9 @@ const User = db.Model.extend({
     hasSecurePassword: true
 });
 
+const Order = db.Model.extend({
+  tableName:'orderTable',
+});
 
 
 const opts = {
@@ -81,9 +84,21 @@ app.post('/getToken', (req,res) => {
    });
 });
 
+app.post('/createOrder', (req,res) => {
+  const order = new Order({
+    userName: req.body.userName,
+    time: req.body.time,
+    address: req.body.address,
+    latitude: req.body.latitude,
+    longitude: req.body.longitude
+  });
+
+  order.save().then(() => {res.send('order has been saved');});
+});
+
 app.get('/protected' , passport.authenticate('jwt', { session:false }), (req, res) => {
    res.send('i\'m protected');
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8000;
 app.listen(PORT);
