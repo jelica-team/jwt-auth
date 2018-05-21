@@ -100,6 +100,14 @@ app.post('/getToken', (req,res) => {
    });
 });
 
+app.get('/getOrders', (req,res) => { 
+response = knexDb.select().table('orders').then(function(orders){ 
+
+console.log(orders); 
+
+}); 
+}); 
+
 app.get('/protected' , passport.authenticate('jwt', { session:false }), (req, res) => {
    res.send('i\'m protected');
 });
