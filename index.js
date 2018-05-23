@@ -21,6 +21,9 @@ const bookshelf = require('bookshelf');
 const securePassword = require('bookshelf-secure-password');
 const db = bookshelf(knexDb);
 const jwt  = require('jsonwebtoken');
+
+const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+const xhr = new XMLHttpRequest();
 db.plugin(securePassword);
 
 const User = db.Model.extend({
@@ -94,6 +97,19 @@ app.post('/createOrder', (req,res) => {
   });
 
   order.save().then(() => {res.send('order has been saved');});
+});
+
+function getOrders(callback){
+  JSON.stringify(results), function (err) {
+      if (err) throw err;
+      console.log('Saved!');
+    });
+}
+
+app.get('/getOrders', (req,res) => {
+  response = knexDb.select().table('orders').then(function(orders){
+  console.log(orders);
+  });
 });
 
 app.get('/protected' , passport.authenticate('jwt', { session:false }), (req, res) => {
