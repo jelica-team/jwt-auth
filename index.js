@@ -6,6 +6,7 @@ const passport = require('./jwtConfig/passport');
 const authRoutes = require('./routes/auth/auth');
 const orderRoutes = require('./routes/orders/createOrder');
 const getOrderRoutes = require('./routes/orders/getOrders');
+var cors = require('cors');
 
 app.use(passport.initialize());
 app.use(parser.urlencoded({
@@ -29,5 +30,9 @@ app.use(getOrderRoutes);
   order.save().then(() => {res.send('order has been saved');});
 });*/
 
+
+
+// use it before all route definitions
+app.use(cors({origin: 'null'}));
 const PORT = process.env.PORT || 8000;
 app.listen(PORT);
