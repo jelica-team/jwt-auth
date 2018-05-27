@@ -2,13 +2,13 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('orders', t => {
     t.increments('id').unsigned().primary();
-    t.string('userName').notNull();
-    t.string('address').notNull();
-    t.string('description').notNull();
+    t.string('userName').notNullable();
+    t.string('address').notNullable();
+    t.string('description').notNullable();
     t.float('latitude').notNullable();
   	t.float('longitude').notNullable();
-    t.timestamp('created_at').defaultTo(knex.fn.now());
-  	t.timestamp('updated_at').defaultTo(knex.fn.now());
+    t.bigInteger('created_at').defaultTo(knex.raw('round(extract(epoch from now()))'));
+  	t.bigInteger('updated_at').defaultTo(knex.raw('round(extract(epoch from now()))'));
   } )
 };
 
