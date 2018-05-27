@@ -1,0 +1,7 @@
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script>
+    $.get("https://817e01ae.ngrok.io/getOrders",function(response){
+      console.log('ajax successful');
+      document.write(JSON.stringify(response))
+    })
+</script>
