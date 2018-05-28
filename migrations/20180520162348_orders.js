@@ -9,8 +9,8 @@ exports.up = function(knex, Promise) {
     t.float('latitude').notNullable();
   	t.float('longitude').notNullable();
     t.string('short_link');
-    t.bigInteger('created_at').defaultTo(knex.raw('round(extract(epoch from now()))'));
-  	t.bigInteger('updated_at').defaultTo(knex.raw('round(extract(epoch from now()))'));
+    t.bigInteger('created_at').defaultTo(knex.raw('round(extract(epoch from now())) * 1000'));
+  	t.bigInteger('updated_at').defaultTo(knex.raw('round(extract(epoch from now())) * 1000'));
   } )
 };
 

@@ -25,13 +25,8 @@ function setLink(order) {
 	  .andWhere('description', order.attributes.description)
 	  .andWhere('latitude', order.attributes.latitude)
 	  .andWhere('longitude', order.attributes.longitude)
-	  .then(row => 
-	  	{
-	  		db.knex('orders')
-			  .where('id', row[0].id)
-			  .update({short_link: shortid.generate()})
-			  .then();
-	  	});
+	  .update({short_link: shortid.generate()})
+	  .then();
 }
 
 module.exports = orderRoutes;
