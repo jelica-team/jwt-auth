@@ -561,7 +561,7 @@ Before running on production you have to set the **environment vaiables**:
 
 Optional:
 
-- PORT - the port your api on 127.0.0.1, default to 2017
+- PORT - the port your api on 127.0.0.1, default to 3003
 
 ### other commands
 
