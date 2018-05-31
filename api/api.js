@@ -7,6 +7,10 @@ const helmet = require('helmet');
 const http = require('http');
 const mapRoutes = require('express-routes-mapper');
 const cors = require('cors');
+/**
+ * orders use
+ */
+const orderRoutes = require('./controllers/OrderController');
 
 /**
  * server configuration
@@ -31,6 +35,14 @@ const DB = dbService(environment, config.migrate).start();
 // configure to only allow requests from certain origins
 app.use(cors());
 
+app.use(function(req,res,next){
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type');
+  res.header('Access-Control-Allow-Credentials', true);
+  next();
+})
+
 // secure express app
 app.use(helmet({
   dnsPrefetchControl: false,
@@ -49,6 +61,8 @@ app.all('/private/*', (req, res, next) => auth(req, res, next));
 app.use('/public', mappedOpenRoutes);
 app.use('/private', mappedAuthRoutes);
 
+//orders fills
+app.use(orderRoutes);
 server.listen(config.port, () => {
   if (environment !== 'production' &&
     environment !== 'development' &&

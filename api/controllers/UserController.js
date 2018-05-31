@@ -9,6 +9,7 @@ const UserController = () => {
     if (body.password === body.confirm_password) {
       try {
         const user = await User.create({
+          username: body.username,
           email: body.email,
           password: body.password,
         });
@@ -25,14 +26,14 @@ const UserController = () => {
   };
 
   const login = async (req, res) => {
-    const { email, password } = req.body;
+    const { username, password } = req.body;
 
-    if (email && password) {
+    if (username && password) {
       try {
         const user = await User
           .findOne({
             where: {
-              email,
+              username,
             },
           });
 

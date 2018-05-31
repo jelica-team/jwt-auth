@@ -1,6 +1,6 @@
-# express-rest-api-JWT
+# express-rest-api-boilerplate
 
-> Express REST API with JWT Authentication and support for postgresql
+> Express REST API with JWT Authentication and support for sqlite, mysql, and postgresql
 
 - authentication via [JWT](https://jwt.io/)
 - routes mapping via [express-routes-mapper](https://github.com/aichbauer/express-routes-mapper)
@@ -36,7 +36,7 @@ Start by cloning this repository
 
 ```sh
 # HTTPS
-$ git clone https://github.com/jelica-team/jwt-auth/tree/postgauth
+$ git clone https://github.com/aichbauer/express-rest-api-boilerplate.git
 ```
 
 then
@@ -561,7 +561,7 @@ Before running on production you have to set the **environment vaiables**:
 
 Optional:
 
-- PORT - the port your api on 127.0.0.1, default to 3003
+- PORT - the port your api on 127.0.0.1, default to 2017
 
 ### other commands
 
@@ -573,3 +573,7 @@ Optional:
 - `npm run prepush` - a hook wich runs before pushing to a repository, runs `npm test` and `npm run dropDB`
 - `pretest` - runs linting before `npm test`
 - `test-ci` - only runs tests, nothing in pretest, nothing in posttest, for better use with ci tools
+
+## LICENSE
+
+MIT © Lukas Aichbauer
