@@ -573,7 +573,3 @@ Optional:
 - `npm run prepush` - a hook wich runs before pushing to a repository, runs `npm test` and `npm run dropDB`
 - `pretest` - runs linting before `npm test`
 - `test-ci` - only runs tests, nothing in pretest, nothing in posttest, for better use with ci tools
-
-## LICENSE
-
-MIT © Lukas Aichbauer
