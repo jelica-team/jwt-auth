@@ -1,6 +1,6 @@
-# express-rest-api-boilerplate
+# express-rest-api-JWT
 
-> Express REST API with JWT Authentication and support for sqlite, mysql, and postgresql
+> Express REST API with JWT Authentication and support for postgresql
 
 - authentication via [JWT](https://jwt.io/)
 - routes mapping via [express-routes-mapper](https://github.com/aichbauer/express-routes-mapper)
@@ -36,7 +36,7 @@ Start by cloning this repository
 
 ```sh
 # HTTPS
-$ git clone https://github.com/aichbauer/express-rest-api-boilerplate.git
+$ git clone https://github.com/jelica-team/jwt-auth/tree/postgauth
 ```
 
 then
