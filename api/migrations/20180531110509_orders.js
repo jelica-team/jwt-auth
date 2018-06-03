@@ -1,7 +1,8 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('orders', t => {
     t.increments('id').unsigned().primary();
-    t.string('userName').notNullable();
+    t.integer('user_id').references('id').inTable('users').notNullable();
+    t.integer('client_id').references('id').inTable('users');
     t.string('address').notNullable();
     t.string('description').notNullable();
     t.float('latitude').notNullable();
