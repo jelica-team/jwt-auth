@@ -11,6 +11,13 @@
 
       <b-form-group id="exampleInputGroup1">
         <b-form-input id="exampleInput1"
+                      type="text" v-model="form.phone" required
+                      placeholder="Phone"
+        ></b-form-input>
+      </b-form-group>
+
+      <b-form-group id="exampleInputGroup1">
+        <b-form-input id="exampleInput1"
                       type="email" v-model="form.email" required
                       placeholder="Email"
         ></b-form-input>
