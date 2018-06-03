@@ -12,6 +12,7 @@ const UserController = () => {
           username: body.username,
           email: body.email,
           password: body.password,
+          phone:body.phone,
         });
         const token = authService().issue({ id: user.id });
 
