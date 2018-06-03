@@ -1,6 +1,6 @@
-# authclient
+# Auth Ui-VUEjs
 
-> vue autch client
+> Login and signup form using Vue.js and bootstrap-vue
 
 ## Build Setup
 
