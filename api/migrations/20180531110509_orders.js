@@ -5,9 +5,10 @@ exports.up = function(knex, Promise) {
     t.string('address').notNullable();
     t.string('description').notNullable();
     t.float('latitude').notNullable();
-  	t.float('longitude').notNullable();
-    t.bigInteger('created_at').defaultTo(knex.raw('round(extract(epoch from now()))*1000'));
-  	t.bigInteger('updated_at').defaultTo(knex.raw('round(extract(epoch from now()))*1000'));
+    t.float('longitude').notNullable();
+    t.string('short_link');
+    t.bigInteger('created_at').defaultTo(knex.raw('round(extract(epoch from now())) * 1000'));
+    t.bigInteger('updated_at').defaultTo(knex.raw('round(extract(epoch from now())) * 1000'));
   } )
 };
 

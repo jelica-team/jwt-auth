@@ -4,7 +4,6 @@ const path = require('path');
 const connection = require('./connection');
 
 let database;
-
 switch (process.env.NODE_ENV) {
   case 'production':
     database = new Sequelize(
@@ -20,6 +19,7 @@ switch (process.env.NODE_ENV) {
         },
       },
     );
+	database.sync({force :false});
     break;
   case 'testing':
     database = new Sequelize(
@@ -35,6 +35,7 @@ switch (process.env.NODE_ENV) {
         },
       },
     );
+	database.sync({force :false});
     break;
   default:
     database = new Sequelize(
