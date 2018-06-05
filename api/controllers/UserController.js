@@ -12,9 +12,12 @@ const UserController = () => {
           username: body.username,
           email: body.email,
           password: body.password,
-          phone:body.phone,
+          phone: body.phone,
         });
         const token = authService().issue({ id: user.id });
+
+        req.session.token = token;
+        req.session.user_id = user.id;
 
         return res.status(200).json({ token, user });
       } catch (err) {
@@ -44,7 +47,8 @@ const UserController = () => {
 
         if (bcryptService().comparePassword(password, user.password)) {
           const token = authService().issue({ id: user.id });
-
+          req.session.token = token;
+          req.session.user_id = user.id;
           return res.status(200).json({ token, user });
         }
 

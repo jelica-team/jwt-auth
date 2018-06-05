@@ -4,12 +4,12 @@
         "import"
     ],
     "rules": {
-        "arrow-parens": [
-            "error",
-            "always"
-        ]
+        "linebreak-style": 0,
+        "func-names": off,
+        "no-console": off
     },
     "env": {
         "jest": true
     }
+
 }

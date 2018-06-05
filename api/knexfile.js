@@ -7,7 +7,7 @@ module.exports = {
       host: '127.0.0.1',
       user: 'postgres',
       password: 'ef91ckut',
-      database: 'jwt_auth'
-    }
+      database: 'jwt_auth',
+    },
   },
 };

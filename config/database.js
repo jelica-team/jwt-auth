@@ -19,7 +19,7 @@ switch (process.env.NODE_ENV) {
         },
       },
     );
-	database.sync({force :false});
+    database.sync({ force: false });
     break;
   case 'testing':
     database = new Sequelize(
@@ -35,7 +35,7 @@ switch (process.env.NODE_ENV) {
         },
       },
     );
-	database.sync({force :false});
+    database.sync({ force: false });
     break;
   default:
     database = new Sequelize(

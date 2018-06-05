@@ -11,7 +11,7 @@ const dbService = (environment, migrate) => {
     console.info('connection to the database has been established successfully')
   );
 
-  const errorDBStart = (err) => (
+  const errorDBStart = err => (
     console.info('unable to connect to the database:', err)
   );
 
