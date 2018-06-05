@@ -37,4 +37,11 @@ orderRoutes.get('/getOrdersForUser', (req, res) => {
     });
 });
 
+orderRoutes.post('/takeOrder', (req, res) => {
+  db.knex.select('client_id').table('orders')
+    .where('short_link', req.body.short_link)
+    .update({client_id: req.session.user_id})
+    .then(res.send("take order " + req.body.short_link + " for user " + req.session.user_id));
+});
+
 module.exports = orderRoutes;
