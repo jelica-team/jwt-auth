@@ -37,4 +37,44 @@ orderRoutes.get('/getOrdersForUser', (req, res) => {
     });
 });
 
+orderRoutes.post('/takeOrder', (req, res) => {
+  db.knex.select('client_id').table('orders')
+    .where('short_link', req.body.short_link)
+    .update({client_id: req.session.user_id})
+    .then(res.send("take order " + req.body.short_link + " for user " + req.session.user_id));
+});
+
+orderRoutes.post('/closeOrder', (req, res) => {
+  db.knex('orders')
+    .where('user_id', req.session.user_id)
+    .andWhere('short_link', req.body.short_link)
+    .first()
+    .then((order) => {
+      res.send(order.client_id);
+    });
+
+  db.knex('orders')
+    .where('user_id', req.session.user_id)
+    .andWhere('short_link', req.body.short_link)
+    .del()
+    .then();
+});
+
+orderRoutes.post('/rateUser', (req, res) => {
+  db.knex('users').select()
+    .where('id', req.body.user_id)
+    .first()
+    .then((user) => {
+      var newrating = (parseFloat(user.count_rating) * parseFloat(user.rating) + parseFloat(req.body.value)) / (user.count_rating + 1);
+      db.knex('users')
+        .where('id', req.body.user_id)
+        .update({
+          count_rating: user.count_rating + 1,
+          rating: newrating,
+        })
+        .then();
+      res.send("rating update for user " + user.id);
+    });
+});
+
 module.exports = orderRoutes;
