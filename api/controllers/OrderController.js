@@ -44,4 +44,20 @@ orderRoutes.post('/takeOrder', (req, res) => {
     .then(res.send("take order " + req.body.short_link + " for user " + req.session.user_id));
 });
 
+orderRoutes.post('/closeOrder', (req, res) => {
+  db.knex('orders')
+    .where('user_id', req.session.user_id)
+    .andWhere('short_link', req.body.short_link)
+    .first()
+    .then((order) => {
+      res.send(order);
+    });
+
+  db.knex('orders')
+    .where('user_id', req.session.user_id)
+    .andWhere('short_link', req.body.short_link)
+    .del()
+    .then();
+});
+
 module.exports = orderRoutes;
