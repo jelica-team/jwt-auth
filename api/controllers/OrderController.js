@@ -50,7 +50,7 @@ orderRoutes.post('/closeOrder', (req, res) => {
     .andWhere('short_link', req.body.short_link)
     .first()
     .then((order) => {
-      res.send(order);
+      res.send(order.client_id);
     });
 
   db.knex('orders')
@@ -58,6 +58,23 @@ orderRoutes.post('/closeOrder', (req, res) => {
     .andWhere('short_link', req.body.short_link)
     .del()
     .then();
+});
+
+orderRoutes.post('/rateUser', (req, res) => {
+  db.knex('users').select()
+    .where('id', req.body.user_id)
+    .first()
+    .then((user) => {
+      var newrating = (parseFloat(user.count_rating) * parseFloat(user.rating) + parseFloat(req.body.value)) / (user.count_rating + 1);
+      db.knex('users')
+        .where('id', req.body.user_id)
+        .update({
+          count_rating: user.count_rating + 1,
+          rating: newrating,
+        })
+        .then();
+      res.send("rating update for user " + user.id);
+    });
 });
 
 module.exports = orderRoutes;

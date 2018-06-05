@@ -7,7 +7,6 @@ exports.up = function (knex) {
     t.string('description').notNullable();
     t.float('latitude').notNullable();
     t.float('longitude').notNullable();
-    t.float('rating');
     t.string('short_link');
     t.bigInteger('created_at').defaultTo(knex.raw('round(extract(epoch from now())) * 1000'));
     t.bigInteger('updated_at').defaultTo(knex.raw('round(extract(epoch from now())) * 1000'));

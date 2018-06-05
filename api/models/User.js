@@ -27,6 +27,14 @@ const User = sequelize.define('User', {
   password: {
     type: Sequelize.STRING,
   },
+  count_rating: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0,
+  },
+  rating: {
+    type: Sequelize.FLOAT,
+    defaultValue: 0,
+  },
 }, { hooks, tableName });
 
 // eslint-disable-next-line
