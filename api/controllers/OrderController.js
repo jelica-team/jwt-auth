@@ -2,13 +2,14 @@ const Order = require('../models/Order');
 const orderRoutes = require('express').Router();
 const db = require('../../config/knexDB/knexconfig.js');
 const shortid = require('shortid');
+const localStorage = require('localStorage');
 
 orderRoutes.post('/createOrder', (req, res) => {
-  if (!req.session.user_id) {
+  if (!localStorage.getItem('user_id')) {
     res.send('Need Authorize');
   } else {
     const order = new Order({
-      user_id: req.session.user_id,
+      user_id: localStorage.getItem('user_id'),
       short_link: shortid.generate(),
       address: req.body.address,
       description: req.body.description,
@@ -29,24 +30,28 @@ orderRoutes.get('/getOrders', (req, res) => {
 });
 
 orderRoutes.get('/getOrdersForUser', (req, res) => {
+  if (!localStorage.getItem('user_id')) {
+    res.send('Need Authorize');
+  } else {
   db.knex.select().table('orders')
-    .where('user_id', req.session.user_id)
+    .where('user_id', localStorage.getItem('user_id'))
     .then((orders) => {
       console.log(orders);
       res.send(orders);
     });
+  }
 });
 
 orderRoutes.post('/takeOrder', (req, res) => {
   db.knex.select('client_id').table('orders')
     .where('short_link', req.body.short_link)
-    .update({client_id: req.session.user_id})
-    .then(res.send("take order " + req.body.short_link + " for user " + req.session.user_id));
+    .update({client_id: localStorage.getItem('user_id')})
+    .then(res.send("take order " + req.body.short_link + " for user " + localStorage.getItem('user_id')));
 });
 
 orderRoutes.post('/closeOrder', (req, res) => {
   db.knex('orders')
-    .where('user_id', req.session.user_id)
+    .where('user_id', localStorage.getItem('user_id'))
     .andWhere('short_link', req.body.short_link)
     .first()
     .then((order) => {
@@ -54,7 +59,7 @@ orderRoutes.post('/closeOrder', (req, res) => {
     });
 
   db.knex('orders')
-    .where('user_id', req.session.user_id)
+    .where('user_id', localStorage.getItem('user_id'))
     .andWhere('short_link', req.body.short_link)
     .del()
     .then();
