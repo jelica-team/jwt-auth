@@ -28,7 +28,20 @@ orderRoutes.post('/createOrder', (req, res) => {
 });
 
 orderRoutes.get('/getOrders', async (req, res) => {
-  res.send(await db.knex.select().table('orders').where('client_id', null).andWhere('isClose', false));
+  res.send(await db.knex.select().table('orders').where('client_id', null).andWhere('is_close', false));
+});
+
+orderRoutes.get('/getMyOrders/:id', (req, res) => {
+  if (!req.params.id) {
+    res.send('Need Authorize');
+  } else {
+  db.knex.select().table('orders')
+    .where('user_id', req.params.id)
+    .andWhere('is_close', false)
+    .then((orders) => {
+      res.send(orders);
+    });
+  }
 });
 
 orderRoutes.get('/getOrdersForUser/:id', (req, res) => {
@@ -36,10 +49,9 @@ orderRoutes.get('/getOrdersForUser/:id', (req, res) => {
     res.send('Need Authorize');
   } else {
   db.knex.select().table('orders')
-    .where('user_id', req.params.id)
-    .andWhere('isClose', false)
+    .where('client_id', req.params.id)
+    .andWhere('is_close', false)
     .then((orders) => {
-      console.log(orders);
       res.send(orders);
     });
   }
@@ -51,44 +63,41 @@ orderRoutes.get('/user/:id', async (req, res) => {
 
 orderRoutes.post('/takeOrder', (req, res) => {
   if (req.body.user_id != req.body.client_id) {
-    db.knex.select('client_id').table('orders')
+    db.knex.table('orders')
       .where('short_link', req.body.short_link)
       .update({client_id: req.body.client_id})
-      .then(res.send("take order " + req.body.short_link + " for user " + req.body.client_id));
+      .then((orders) => {
+        res.send("take order " + req.body.short_link + " for user " + req.body.client_id)
+      });
   }
 });
 
-orderRoutes.post('/closeOrder', (req, res) => {
+orderRoutes.get('/delete/:id/:link', async (req, res) => {
   db.knex('orders')
-    .where('user_id', req.body.user_id)
-    .andWhere('short_link', req.body.short_link)
-    .first()
-    .then((order) => {
-      res.send(order);
-    });
-
-  db.knex('orders')
-    .where('user_id', req.body.user_id)
-    .andWhere('short_link', req.body.short_link)
+    .where('user_id', req.params.id)
+    .andWhere('short_link', req.params.link)
+    .andWhere('is_close', true)
     .del()
-    .then();
+    .then((order) => {
+      res.send(req.params.link + " was delete");
+    });
 });
 
 orderRoutes.post('/close', (req, res) => {
   db.knex('orders')
-    .where('user_id', req.body.user_id)
-    .andWhere('short_link', req.body.short_link)
-    .update({isClose: true})
-    .first()
+    .where({short_link: req.body.short_link, client_id: req.body.user_id})
+    .orWhere({short_link: req.body.short_link, user_id: req.body.user_id})
+    .update({is_close: true})
     .then((order) => {
-      res.send(order);
+      res.send(req.body.short_link + " was close");
     });
 });
 
 orderRoutes.get('/ordersForRate/:id', (req, res) => {
-  db.knex('orders').select('user_id', 'client_id', 'description')
+  db.knex('orders').select('client_id', 'description')
     .where('user_id', req.params.id)
-    .andWhere('isClose', true)
+    .andWhere('is_close', true)
+    .first()
     .then((order) => {
       res.send(order);
     });
