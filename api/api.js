@@ -31,11 +31,6 @@ const mappedOpenRoutes = mapRoutes(config.publicRoutes, 'api/controllers/');
 const mappedAuthRoutes = mapRoutes(config.privateRoutes, 'api/controllers/');
 const DB = dbService(environment, config.migrate).start();
 
-/**
- * cookie session
- */
-const session = require('cookie-session');
-
 // allow cross origin requests
 // configure to only allow requests from certain origins
 app.use(cors());
@@ -59,16 +54,6 @@ app.use(helmet({
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// session cookie
-app.use(session({
-  name: 'session',
-  keys: ['key1', 'key2'],
-  cookie: {
-    secure: true,
-    httpOnly: true,
-    maxAge: 24 * 60 * 60 * 1000, // 24 hours
-  },
-}));
 // secure your private routes with jwt authentication middleware
 app.all('/private/*', (req, res, next) => auth(req, res, next));
 

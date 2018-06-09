@@ -1,7 +1,6 @@
 const User = require('../models/User');
 const authService = require('../services/auth.service');
 const bcryptService = require('../services/bcrypt.service');
-const localStorage = require('localStorage');
 
 const UserController = () => {
   const register = async (req, res) => {
@@ -16,8 +15,6 @@ const UserController = () => {
           phone: body.phone,
         });
         const token = authService().issue({ id: user.id });
-        localStorage.setItem('token', token);
-        localStorage.setItem('user_id', user.id);
 
         return res.status(200).json({ token, user });
       } catch (err) {
@@ -47,8 +44,7 @@ const UserController = () => {
 
         if (bcryptService().comparePassword(password, user.password)) {
           const token = authService().issue({ id: user.id });
-          localStorage.setItem('token', token);
-          localStorage.setItem('user_id', user.id);
+
           return res.status(200).json({ token, user });
         }
 
